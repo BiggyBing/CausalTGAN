@@ -1,8 +1,6 @@
-# Causal-TGAN-Public
-[Causal-TGAN: Causally-Aware Tabular Data Generative Adversarial Networks](https://openreview.net/forum?id=BEhxCh4dvW5)
+# Causal-TGAN
+This is the code for the project [Causal-TGAN: Causally-Aware Tabular Data Generative Adversarial Networks](https://openreview.net/forum?id=BEhxCh4dvW5)
 
-## Code
-Coming soon...
 ## Citation
 If you use this code for your research, please cite:
 ```
@@ -16,4 +14,19 @@ url={https://openreview.net/forum?id=BEhxCh4dvW5}
 }
 ```
 
-## Contact 
+## Prerequisties
+The project is built on python3.6 with the packages listed in requirements.txt.
+
+To run this project, please first install all the dependencies by `pip install -r requirements.txt`. 
+
+Then, add a new python environment path to this project. For example if your cloned repository reside in `/home/username/CausalTGAN`, then one way to do this is `export PYTHONPATH="/home/username"` from command line or add it to your `~/.bashrc`. 
+
+## To prepare a dataset for training Causal-TGAN
+An example dataset is illustrated in `./data/real_world/adult`. Instructions of adding the customized dataset is coming soon.
+
+## To train a Causal-TGAN
+`python train.py`. The training details such as dataset and epochs are set inside `train.py`
+
+## To sample from Causal-TGAN
+`python sampling.py`. The details such as number of samples to generate and causal-TGAN path are set inside `sampling.py`
+
