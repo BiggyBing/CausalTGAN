@@ -1,0 +1,16 @@
+Graph Nodes:
+age;fnlwgt;education-num;capital-gain;capital-loss;hours-per-week
+
+Graph Edges:
+1. age --> hours-per-week
+2. capital-gain --> age
+3. capital-gain --> capital-loss
+4. capital-gain --> education-num
+5. capital-gain --> hours-per-week
+6. capital-loss --> age
+7. capital-loss --> education-num
+8. capital-loss --> hours-per-week
+9. fnlwgt --> age
+10. fnlwgt --> education-num
+11. hours-per-week --> education-num
+
