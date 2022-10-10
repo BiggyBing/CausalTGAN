@@ -20,8 +20,8 @@ The project is built on python3.6 with the pytorch version of 1.9.0.
 To run this project, please add a new python environment path to this project. For example if your cloned repository reside in `/home/username/CausalTGAN`, then one way to do this is `export PYTHONPATH="/home/username"` from command line or add it to your `~/.bashrc`. 
 
 ## To prepare a dataset for training Causal-TGAN
-An example dataset is illustrated in `./data/real_world/adult`. <br>
-Instructions of adding the customized dataset is following:
+1. An example dataset is illustrated in `./data/real_world/adult`. <br>
+2. Instructions of adding the customized dataset is following:
 
 
 ## To train a Causal-TGAN
