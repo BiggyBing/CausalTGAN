@@ -15,11 +15,9 @@ url={https://openreview.net/forum?id=BEhxCh4dvW5}
 ```
 
 ## Prerequisties
-The project is built on python3.6 with the packages listed in requirements.txt.
+The project is built on python3.6 with the pytorch version of 1.9.0.
 
-To run this project, please first install all the dependencies by `pip install -r requirements.txt`. 
-
-Then, add a new python environment path to this project. For example if your cloned repository reside in `/home/username/CausalTGAN`, then one way to do this is `export PYTHONPATH="/home/username"` from command line or add it to your `~/.bashrc`. 
+To run this project, please add a new python environment path to this project. For example if your cloned repository reside in `/home/username/CausalTGAN`, then one way to do this is `export PYTHONPATH="/home/username"` from command line or add it to your `~/.bashrc`. 
 
 ## To prepare a dataset for training Causal-TGAN
 An example dataset is illustrated in `./data/real_world/adult`. Instructions of adding the customized dataset is coming soon.
