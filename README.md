@@ -1,5 +1,5 @@
 # Causal-TGAN-Public
-Causal-TGAN: [Causally-Aware Tabular Data Generative Adversarial Networks](https://openreview.net/forum?id=BEhxCh4dvW5)
+[Causal-TGAN: Causally-Aware Tabular Data Generative Adversarial Networks](https://openreview.net/forum?id=BEhxCh4dvW5)
 
 ## Code
 Coming soon...
