@@ -1,6 +1,7 @@
 import os
 import pickle
 import torch
+import numpy as np
 from torch import autograd
 from CausalTGAN.model.condGAN import ConditionalGAN
 from CausalTGAN.helper.utils import print_progress, load_options
@@ -80,21 +81,7 @@ class CausalTGAN(object):
 
     def _fit_causalGAN(self, train_data, train_options, verbose):
         for i in range(train_options.number_of_epochs):
-            losses_accu = {}
-            for data in train_data:
-                batch_size = data.size(0)
-                if batch_size % self.config.pac_num != 0:
-                    continue
-
-                data = data.to(self.device)
-                losses = self.train_on_batch(data)
-                if not losses_accu:  # dict is empty, initialize
-                    for name in losses:
-                        losses_accu[name] = []
-
-                for name, loss in losses.items():
-                    losses_accu[name].append(loss)
-
+            losses_accu = self.train_one_epoch(train_data)
             if verbose:
                 print('Epoch {}/{}'.format(i, train_options.number_of_epochs))
                 print_progress(losses_accu)
@@ -114,17 +101,16 @@ class CausalTGAN(object):
         torch.save(checkpoint, checkpoint_filename)
         print('Saving checkpoint done.')
 
-    def train_on_batch(self, batch):
-        real_data = batch
-        batch_size = real_data.size(0)
-        for var in self.discriminator.parameters():
-            var.requires_grad = True  # Set False when train generator
+    def train_one_epoch(self, train_data):
+        G_losses = []
+        D_losses = []
+        for steps, data in enumerate(train_data):
+            batch_size = data.size(0)
+            if batch_size % self.config.pac_num != 0:
+                continue
 
-        for params in self.generators_params:
-            for var in params['params']:
-                var.requires_grad = False  # Set False when train generator
+            real_data = data.to(self.device)
 
-        for i in range(self.config.D_iter):
             D_real = self.discriminator(real_data)
             D_real = D_real.mean()
 
@@ -141,25 +127,21 @@ class CausalTGAN(object):
             gradient_penalty.backward(retain_graph=True)
             D_cost.backward()
             self.disc_optimizer.step()
+            D_losses.append(D_cost.data.cpu().numpy())
 
-        for var in self.discriminator.parameters():
-            var.requires_grad = False
-        for params in self.generators_params:
-            for var in params['params']:
-                var.requires_grad = True
-
-        fake_data = self.causal_controller.sample(batch_size).contiguous()
-        G = self.discriminator(fake_data)
-        G = G.mean()
-        G_cost = -G
-        self.gen_optimizer.zero_grad()
-        G_cost.backward()
-        self.gen_optimizer.step()
+            if (steps+1) % self.config.D_iter == 0:
+                fake_data = self.causal_controller.sample(batch_size).contiguous()
+                G = self.discriminator(fake_data)
+                G = G.mean()
+                G_cost = -G
+                self.gen_optimizer.zero_grad()
+                G_cost.backward()
+                self.gen_optimizer.step()
+                G_losses.append(G_cost.data.cpu().numpy())
 
         losses = {
-            'G_cost         ': G_cost.data.cpu().numpy(),
-            'D_cost         ': D_cost.data.cpu().numpy(),
-            'Wasserstein_D  ': D_cost.data.cpu().numpy()
+            'G_cost         ': np.mean(G_losses),
+            'D_cost         ': np.mean(D_losses)
         }
         return losses
 
