@@ -34,7 +34,7 @@ To run this project, please add a new python environment path to this project. F
 	```python
 	def check_BN_datatype(data_name):
           if data_name in ['your_dataset_name']:
-              return 'continuous'
+            return 'continuous'
 	```
 	- Step 3 (Optional): If customized dataset is Continuous type, please declare Discrete Column in `get_discrete_cols()` function in `helper/utils.py`. For example,
 	```python
