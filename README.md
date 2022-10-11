@@ -49,8 +49,10 @@ To run this project, please add a new python environment path to this project. F
 	  
 	...
 	```
+	
 	- Step 4: Prepare your causal graph by using **Tetrad**. You can go to https://www.ccd.pitt.edu/tools/ and click [Tetrad Latest Executable] to download **Tetrad**. We have created a tutorial on how to use **Tetrad** to generated causal graphs. See in [Tetrad_Tutorial.pdf](Tetrad_Tutorial.pdf) <br> 
 	           After this steps, you should have a 'graph_tetrad.txt' file. 
+		   
 	- Step 5: Use `helper/graphFromTetrad.py` to convert Tetrad graph to common graph data and save it as 'graph.txt'. 
 
 - Now, you can use the `load_data_graph(args.data_name)` function in `train.py` to load your customized datasets and train model.
