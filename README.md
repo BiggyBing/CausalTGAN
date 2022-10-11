@@ -33,7 +33,7 @@ To run this project, please add a new python environment path to this project. F
 	- Step 2: Check your dataset type (Continuous, Discrete, Mix) and add the dataset type information into `check_BN_datatype` function in `helper/constant.py`. For example, if your dataset is Mix type dataset, you can modify the code as following:
 	```python
 	def check_BN_datatype(data_name):
-          if data_name in [...]:
+          if data_name in ['your dataset name']:
               return 'mixed'
 	```
 
