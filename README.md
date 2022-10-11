@@ -49,7 +49,9 @@ To run this project, please add a new python environment path to this project. F
 	  
 	...
 	```
-	- Step 4: Run `get_discrete_cols()` function in `helper/utils.py` to get the discrete columns, continuous columns.
+	- Step 4: Prepare your causal graph by using **Tetrad**. You can go to https://www.ccd.pitt.edu/tools/ and click <Tetrad Latest Executable> to download **Tetrad**. 
+	
+
 
 ## To train a Causal-TGAN
 `python train.py`. The training details such as dataset and epochs are set inside `train.py`
