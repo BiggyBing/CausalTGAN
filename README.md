@@ -30,11 +30,21 @@ To run this project, please add a new python environment path to this project. F
 
 	```
 	
-	- Step 2: Check your dataset type (Continuous, Discrete, Mix) and add the dataset type information into `check_BN_datatype` function in `helper/constant.py`. For example, if your dataset is Mix type dataset, you can modify the code as following:
+	- Step 2: Check your dataset type (Continuous, Discrete, Mix) and add the dataset type information into `check_BN_datatype()` function in `helper/utils.py`. For example, if your dataset is Mix type dataset, you can modify the code as following:
 	```python
 	def check_BN_datatype(data_name):
-          if data_name in ['your dataset name']:
+          if data_name in ['your_dataset_name']:
               return 'mixed'
+	```
+	- Step 3 (Optional): If customized dataset is Continuous type or Mix type, please declare Discrete Column in `get_discrete_cols()` function in `helper/utils.py`. For example,
+	```python
+	def get_discrete_cols(data, data_name):
+	...
+	
+	  if data_name == 'your_dataset_name':
+          discrete_cols = Discrete_Column_Name
+	  
+	...
 	```
 
 ## To train a Causal-TGAN
