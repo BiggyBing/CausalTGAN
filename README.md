@@ -55,7 +55,17 @@ To run this project, please add a new python environment path to this project. F
 		   
 	- Step 5: Use `helper/graphFromTetrad.py` to convert Tetrad graph to common graph data and save it as 'graph.txt'. 
 
-- Now, you have completed the preparation steps for the dataset. You can use the `load_data_graph(args.data_name)` function in `train.py` to load your customized datasets and train model.
+- Now, you have completed the preparation steps for the dataset. Your dataset folder structure should look like the following:
+
+```
+|-data
+|  |-customized_dataset
+|     |-graph.txt
+|     |-train.csv
+|     |-test.csv
+
+```
+Then, you can use the `load_data_graph(args.data_name)` function in `train.py` to load your customized datasets and train model.
 
 
 ## To train a Causal-TGAN
