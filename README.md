@@ -34,16 +34,7 @@ To run this project, please add a new python environment path to this project. F
 	```python
 	def check_BN_datatype(data_name):
           if data_name in [...]:
-              return 'discrete'
-	      
-   	  elif data_name in [...]:
-              return 'continuous'
-	      
-    	  elif data_name in ['your dataset name']:
               return 'mixed'
-	      
-   	  else:
-              return None
 	```
 
 ## To train a Causal-TGAN
