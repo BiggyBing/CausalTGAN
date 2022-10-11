@@ -22,7 +22,7 @@ To run this project, please add a new python environment path to this project. F
 ## To prepare a dataset for training Causal-TGAN
 1. An example dataset is illustrated in `./data/real_world/adult`. <br>
 2. Instructions of adding the customized dataset is following:
-    * Identify your data type (Continuous, Discrete, Mix)
+    * s  Identify your data type (Continuous, Discrete, Mix)
 
 ## To train a Causal-TGAN
 `python train.py`. The training details such as dataset and epochs are set inside `train.py`
