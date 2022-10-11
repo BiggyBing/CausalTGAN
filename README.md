@@ -23,7 +23,7 @@ To run this project, please add a new python environment path to this project. F
 - An example dataset is illustrated in `./data/real_world/adult`. <br>
 
 - Instructions of adding the customized dataset is following:
-	- Step 1: Add your dataset name and name of column into `helper/constant.py`
+	- Step 1: Add your dataset name and name of column into `helper/constant.py`. For example:
 	```python
 	DATASETS = ['asia', 'alarm', 'child', 'insurance', 'your dataset name']
 	YOUR_DATASET_NAME = ['column_1', 'column_2', 'column_3']
