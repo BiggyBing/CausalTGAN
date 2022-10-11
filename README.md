@@ -25,22 +25,22 @@ To run this project, please add a new python environment path to this project. F
 - Instructions of adding the customized dataset is following:
 	- Step 1: Add your dataset name and name of column into `helper/constant.py`
 	```python
-		DATASETS = ['asia', 'alarm', 'child', 'insurance', 'your dataset name']
-		YOUR_DATASET_NAME = ['column_1', 'column_2', 'column_3']
+	DATASETS = ['asia', 'alarm', 'child', 'insurance', 'your dataset name']
+	YOUR_DATASET_NAME = ['column_1', 'column_2', 'column_3']
 
 	```
 	
 	- Step 2: Check your dataset type (Continuous, Discrete, Mix) and add the dataset type information into `check_BN_datatype` function in `helper/constant.py`. For example, if your dataset is Mix type dataset, you can modify the code as following:
 	```python
-		def check_BN_datatype(data_name):
-    			if data_name in [...]:
-        			return 'discrete'
-   			 elif data_name in [...]:
-        			return 'continuous'
-    			 elif data_name in ['your dataset name']:
-        			return 'mixed'
-   			 else:
-        			return None
+	def check_BN_datatype(data_name):
+            if data_name in [...]:
+                return 'discrete'
+   	    elif data_name in [...]:
+        	return 'continuous'
+    	    elif data_name in ['your dataset name']:
+        	return 'mixed'
+   	    else:
+        	return None
 
 	```
 
