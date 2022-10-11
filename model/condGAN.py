@@ -2,6 +2,7 @@ import torch
 import numpy as np
 from packaging import version
 from torch.nn import functional
+from CausalTGAN.helper.utils import print_progress
 from CausalTGAN.model.module.discriminator import condGAN_discriminator
 from CausalTGAN.model.module.generator import condGAN_generator
 
@@ -147,44 +148,53 @@ class ConditionalGAN(object):
 
         return functional.gumbel_softmax(logits, tau=tau, hard=hard, eps=eps, dim=dim)
 
-    def fit(self, train_data, verbose=False, epochs=300):
+    def fit(self, train_data, verbose=False, epochs=400):
         for i in range(epochs):
-            for data in train_data:
-                real_data = data.to(self.device)
-                batch_size = real_data.size(0)
-                if batch_size % self.pac != 0:
-                    continue
+            losses_accu = self.train_one_epoch(train_data)
+            if verbose:
+                print('Epoch {}/{}'.format(i, epochs))
+                print_progress(losses_accu)
+                print('-' * 40)
 
-                mean = torch.zeros(batch_size, self._embedding_dim, device=self.device)
-                std = mean + 1
+    def train_one_epoch(self, train_data):
+        G_losses = []
+        D_losses = []
+        for steps, data in enumerate(train_data):
+            real_data = data.to(self.device)
+            batch_size = real_data.size(0)
+            if batch_size % self.pac != 0:
+                continue
 
-                for n in range(self._discriminator_steps):
-                    fakez = torch.normal(mean=mean, std=std)
-                    condvec = self.sample_condvec(real_data)
+            mean = torch.zeros(batch_size, self._embedding_dim, device=self.device)
+            std = mean + 1
 
-                    if condvec is not None:
-                        fakez = torch.cat([fakez, condvec], dim=1)
-                    fake = self.generator(fakez)
-                    fake_data_partial = self._apply_activate(fake) # generator only generate S_{normal}
-                    if condvec is not None:
-                        fake_data = self.joint(fake_data_partial, condvec)
-                    else:
-                        fake_data = fake_data_partial
+            fakez = torch.normal(mean=mean, std=std)
+            condvec = self.sample_condvec(real_data)
 
+            if condvec is not None:
+                fakez = torch.cat([fakez, condvec], dim=1)
+            fake = self.generator(fakez)
+            fake_data_partial = self._apply_activate(fake)  # generator only generate S_{normal}
+            if condvec is not None:
+                fake_data = self.joint(fake_data_partial, condvec)
+            else:
+                fake_data = fake_data_partial
 
-                    y_fake = self.discriminator(fake_data)
-                    y_real = self.discriminator(real_data)
+            y_fake = self.discriminator(fake_data)
+            y_real = self.discriminator(real_data)
 
-                    pen = self.discriminator.calc_gradient_penalty(
-                        real_data, fake_data, self.device)
+            pen = self.discriminator.calc_gradient_penalty(
+                real_data, fake_data, self.device)
 
-                    loss_d = -(torch.mean(y_real) - torch.mean(y_fake))
+            loss_d = torch.mean(y_fake) - torch.mean(y_real)
 
-                    self.optimizerD.zero_grad()
-                    pen.backward(retain_graph=True)
-                    loss_d.backward()
-                    self.optimizerD.step()
+            self.optimizerD.zero_grad()
+            pen.backward(retain_graph=True)
+            loss_d.backward()
+            self.optimizerD.step()
+            D_losses.append(loss_d.data.cpu().numpy())
 
+            if (steps+1) % self._discriminator_steps == 0:
                 fakez = torch.normal(mean=mean, std=std)
                 condvec = self.sample_condvec(real_data)
 
@@ -206,11 +216,13 @@ class ConditionalGAN(object):
                 self.optimizerG.zero_grad()
                 loss_g.backward()
                 self.optimizerG.step()
+                G_losses.append(loss_g.data.cpu().numpy())
 
-            if verbose:
-                print(f"Epoch {i + 1}, Loss G: {loss_g.detach().cpu(): .4f},"
-                      f"Loss D: {loss_d.detach().cpu(): .4f}",
-                      flush=True)
+        losses = {
+            'G_cost         ': np.mean(G_losses),
+            'D_cost         ': np.mean(D_losses)
+        }
+        return losses
 
     def fetch_checkpoint(self):
         # fetch the checkpoint of causal mechanisms

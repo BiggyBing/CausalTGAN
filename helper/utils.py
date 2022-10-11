@@ -11,7 +11,7 @@ import pandas as pd
 import torch.utils.data
 from torch.utils.data import Dataset
 from CausalTGAN.dataset import DataTransformer, GeneralTransformer, PlainTransformer
-from CausalTGAN.helper.constant import KINGS_CATEGORY, LOAN_CATEGORY, CABS_CATEGORY, ADULT_CATEGORY, NEWS_CATEGORY, CENSUS_CATEGORY, CREDIT_CATEGORY, DATASETS
+from CausalTGAN.helper.constant import KINGS_CATEGORY, LOAN_CATEGORY, CABS_CATEGORY, ADULT_CATEGORY, NEWS_CATEGORY, CENSUS_CATEGORY, CREDIT_CATEGORY
 
 
 

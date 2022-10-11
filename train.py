@@ -12,21 +12,21 @@ from CausalTGAN.helper.trainer import train_full_knowledge, train_partial_knowle
 def main():
     parser = argparse.ArgumentParser(description='Causal-TGAN-BN')
     parser.add_argument('--data_name', '-dn', default='adult', type=str, help='The name of dataset.')
-    parser.add_argument('--device_idx', '-gpu', default=1, type=int, help='CUDA idx')
+    parser.add_argument('--device_idx', '-gpu', default=2, type=int, help='CUDA idx')
 
     parser.add_argument('--batch_size', '-b', default=500, type=int, help='The batch size.')
     parser.add_argument('--epochs', '-e', default=400, type=int, help='Number of epochs to run the simulation.')
     parser.add_argument('--runs_folder', '-sf', default=os.path.join('.', 'Testing'), type=str,help='The root folder where data about experiments are stored.')
     parser.add_argument('--pac_num', '-pc', default=1, type=int, help='Number of sample in one pac in pac gan')
     parser.add_argument('--z_dim', '-z', default=2, type=int, help='The length in random sample noise - exogenous variable size')
-    parser.add_argument('--d_iter', '-di', default=5, type=int, help='The length in random sample noise - confounder size')
+    parser.add_argument('--d_iter', '-di', default=3, type=int, help='The length in random sample noise - confounder size')
     parser.add_argument('--transformer_type', '-tt', default='ctgan', type=str, help='Type of data transformer', choices=['ctgan', 'plain', 'general'])
 
     parser.set_defaults()
     args = parser.parse_args()
 
     device = torch.device('cuda:{}'.format(args.device_idx)) if torch.cuda.is_available() else torch.device('cpu')
-    exp_name = 'CausalTGAN_runs_{}'.format(args.data_name)
+    exp_name = 'CausalTGAN_runs_new_3_{}'.format(args.data_name)
     this_run_folder = create_folder_for_run(args.runs_folder, exp_name)
 
     data, col_names, discrete_cols, causal_graph = load_data_graph(args.data_name)

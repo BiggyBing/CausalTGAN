@@ -25,10 +25,10 @@ def synthetic(model_path, gen_num, device, save_path=None):
     sample_df = transformer.inverse_transform(samples.data.numpy())
 
     save_path = os.path.join(model_path, 'generated_samples.csv') if save_path is None else save_path
-    sample_df.to_csv(save_path)
+    sample_df.to_csv(save_path, index=False)
 
 if __name__ == '__main__':
-    gen_num = 100
+    gen_num = 34000
     device = torch.device('cuda:2')
-    model_path = './Testing/CausalTGAN_runs_adult2022.10.09--20-12-43'
+    model_path = '/home/bingyang/Causal-TGAN/CausalTGAN/Testing/CausalTGAN_runs_new_3_adult2022.10.10--22-04-12'
     synthetic(model_path, gen_num, device)

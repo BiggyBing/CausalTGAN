@@ -1,6 +1,3 @@
-DATASETS = ['asia', 'alarm', 'child', 'insurance',
-            'ecoli70', 'arth150', 'healthcare', 'mehra-complete',
-            'adult', 'census', 'credit', 'news', 'intrusion', 'cabs', 'loan', 'kings']
 
 ADULT_CATEGORY = ['workclass', 'education', 'marital-status', 'occupation', 'relationship', 'race', 'sex', 'native-country', 'label']
 
