@@ -36,8 +36,9 @@ To run this project, please add a new python environment path to this project. F
 	...
           if data_name in ['your_dataset_name']:
               return 'continuous'
-	      
+	...
 	```
+	
 	- Step 3 (Optional): If customized dataset is Continuous type, please declare Discrete Column in `get_discrete_cols()` function in `helper/utils.py`. For example,
 	```python
 	def get_discrete_cols(data, data_name):
