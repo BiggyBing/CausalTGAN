@@ -28,7 +28,8 @@ To run this project, please add a new python environment path to this project. F
 		DATASETS = ['asia', 'alarm', 'child', 'insurance', 'your dataset name']
 		YOUR_DATASET_NAME = ['column_1', 'column_2', 'column_3']
 
-```
+	```
+	
 	- Step 2: Identify your data type (Continuous, Discrete, Mix) and 
 
 ## To train a Causal-TGAN
